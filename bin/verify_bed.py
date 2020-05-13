@@ -26,14 +26,12 @@ def input_files():
     Args: None
 
     Returns: 
-        ucsc_bed
+        ucsc_bed (str): file path to UCSC .gtf file
+        nirvana_bed (str): file path to Nirvana bed file
     """
 
     ucsc_bed = os.path.expanduser("./ucsc_CDS.gtf")
     nirvana_bed = os.path.expanduser("./refseq_nirvana_2.0.10.bed")
-
-    print(type(ucsc_bed))
-    sys.exit()
 
     return ucsc_bed, nirvana_bed
 
@@ -41,6 +39,14 @@ def input_files():
 def bed_to_df(ucsc_bed, nirvana_bed):
     """
     Make df's of both input files
+
+    Args:
+        ucsc_bed (str): file path to UCSC .gtf file
+        nirvana_bed (str): file path to Nirvana bed file
+
+    Returns:
+        ucsc_df (df): dataframe of UCSC gtf file
+        nirvana_df (df): dataframe of Nirvana bed file
     """
 
     # read in nirvana bed and set header
@@ -53,12 +59,19 @@ def bed_to_df(ucsc_bed, nirvana_bed):
     transcript_col = ucsc_df.iloc[:,-1].str.split('"',0).str[3]
     ucsc_df.iloc[:,-1] = transcript_col
 
-    return nirvana_df, ucsc_df
+    return ucsc_df, nirvana_df
 
 
 def gtf_adjust(ucsc_df):
     """
     Function to adjust UCSC gtf for being 1 based and not inc. stop codons
+
+    Args:
+        ucsc_df (df): dataframe of UCSC gtf file
+
+    Returns: 
+        ucsc_df (df): dataframe of UCSC gtf file with adjusted bases and 
+        only required columns for comparison
     """
     # pair iter function
     def pairwise(iterable):
@@ -116,7 +129,7 @@ def gtf_adjust(ucsc_df):
                 continue
     
     # create output .gff with adjusted bases
-    ucsc_df.to_csv("./ucsc_CDS_base_adjusted.gff", index = None, sep='\t', mode='a')
+    ucsc_df.to_csv("./ucsc_CDS_base_adjusted.gtf", index = None, sep='\t', mode='a')
 
     # just leave start, end, transcript columns & set header
     ucsc_df = ucsc_df.drop(ucsc_df.columns[[1,2,5,6,7]], axis = 1)
@@ -130,7 +143,13 @@ def gtf_adjust(ucsc_df):
 
 def calc_diff(nirvana_df, ucsc_df):
     """
-    Get differences between UCSC and Nirvana
+    Get differences between UCSC and Nirvana, and write to output files
+
+    Args:
+        ucsc_df (df): dataframe of UCSC gtf file
+        nirvana_df (df): dataframe of Nirvana bed file
+    
+    Returns: None
     """
 
     # find differences between ucsc and nirvana
