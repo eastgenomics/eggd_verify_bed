@@ -134,7 +134,7 @@ def gtf_adjust(ucsc_df):
     # create output .gff with adjusted bases
     ucsc_df.to_csv("./ucsc_CDS_base_adjusted.gtf", index = None, sep='\t', mode='a')
 
-    # just leave start, end, transcript columns & set header
+    # just leave chrom, start, end, transcript columns & set header
     ucsc_df = ucsc_df.drop(ucsc_df.columns[[1,2,5,6,7]], axis = 1)
     header = ["chrom", "start", "end", "transcript"]
     ucsc_df.columns = header
