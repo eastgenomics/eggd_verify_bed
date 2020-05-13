@@ -1,7 +1,7 @@
 # verify_bed
 
 ## What does this app do?
-Code created to verify output bed files from nirvana_gff_to_bed app.</br></br>
+Verifies output bed files from nirvana_gff_to_bed app.</br></br>
 Takes .gtf file of transcripts downloaded from UCSC table browser, reformats the file structure and then compares transcript coordinates against those in generated bed.
 
 ## What are typical use cases for this app?
