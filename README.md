@@ -12,6 +12,6 @@ This app requires the generated bed file, and a .gtf file from UCSC table browse
 
 ## What does this app output?
 It outputs 3 files:</br>
-- ucsc_CDS_base_adjusted.gff = input .gtf with required modifications for verifying, useful to sanity check changes
+- ucsc_CDS_base_adjusted.gtf = input .gtf with required modifications for verifying, useful to sanity check changes
 - only_in_ucsc.bed = bed file of transcripts only in UCSC .gtf file (i.e. non matching)
 - ucsc_nirvana_match_transcripts.bed = bed file of matching transcripts 
