@@ -72,6 +72,9 @@ def gtf_adjust(ucsc_df):
     Returns: 
         ucsc_df (df): dataframe of UCSC gtf file with adjusted bases and 
         only required columns for comparison
+    
+    Outputs:
+        ucsc_CDS_base_adjusted.gtf (file): gtf file of input UCSC gtf with adjusted bases
     """
     # pair iter function
     def pairwise(iterable):
@@ -150,6 +153,10 @@ def calc_diff(nirvana_df, ucsc_df):
         nirvana_df (df): dataframe of Nirvana bed file
     
     Returns: None
+
+    Outputs:
+        only_in_ucsc.bed (file): bed file of mismatches
+        ucsc_nirvana_match_transcripts.bed (file): bed file of matches
     """
 
     # find differences between ucsc and nirvana
@@ -174,7 +181,7 @@ if __name__ == "__main__":
 
     ucsc_bed, nirvana_bed = input_files()
 
-    nirvana_df, ucsc_df = bed_to_df(ucsc_bed, nirvana_bed)
+    ucsc_df, nirvana_df = bed_to_df(ucsc_bed, nirvana_bed)
 
     ucsc_df = gtf_adjust(ucsc_df)
 
